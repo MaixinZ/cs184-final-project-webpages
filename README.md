@@ -1,11 +1,29 @@
-# CS184 Project Webpage Repo
+# CS184 Final Project Website
 
-The goal of this repo is to provide a template from which students can host CS184 project writeups. 
+This repository now uses **Next.js + Nextra Docs Theme** instead of the old
+single-file static template.
 
-## Enabling Github Pages
+## Run locally
 
-To enable Github pages, go to the 'Settings' tab then click on 'Pages'. Under 'Source', make sure that the branch is set to 'master' and the folder is set to 'root'. If these settings are correct, navigating to the github page link should render index.html
+```bash
+npm install
+npm run dev
+```
 
-## Adding Project Webpages
+Then open `http://localhost:3000`.
 
-There are 5 folders, one for each project. Each contains an index.html file. When the links from the mainpage are clicked, these files will be loaded, so edit these to add your project webpages.
+## Current structure
+
+- `content/index.mdx`: overview page
+- `content/approach.mdx`: approach page
+- `content/result.mdx`: result page
+- `content/contribution.mdx`: contribution page
+- `content/reference.mdx`: reference page
+- `app/_components/*`: custom banner, navbar, and showcase components
+
+## Notes
+
+- The site uses a light beige note-paper visual system.
+- The top navigator lives inside a frosted glass sticky banner and hides on downward scroll.
+- The site is split into five standalone pages instead of one long scrolling homepage.
+- Nextra's built-in `Playground` component is kept as a client-only demo block on the result flow.

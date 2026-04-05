@@ -1,0 +1,72 @@
+---
+title: Result
+description: Standalone result page for demos, visuals, metrics, and observations.
+---
+
+<div className="page-shell">
+  <section className="hero-note">
+    <p className="note-kicker">result</p>
+    <h1>Where final visuals, metrics, and demo blocks should live.</h1>
+    <div className="hero-lead">
+      This page is reserved for the output of the pipeline: reconstructed meshes,
+      water interaction clips, comparisons, and the short conclusions that
+      matter after the engineering work is done.
+    </div>
+  </section>
+
+  <section className="page-grid">
+    <article className="paper-card">
+      <span className="paper-label">Expected artifacts</span>
+      <h2>Result page checklist</h2>
+      <ul className="stack-list">
+        <li>
+          <strong>Mesh stills</strong>
+          Before and after cleanup images that show why the final geometry was chosen.
+        </li>
+        <li>
+          <strong>Simulation clips</strong>
+          Water hitting flat geometry first, then reconstructed scene geometry.
+        </li>
+        <li>
+          <strong>Comparison notes</strong>
+          One concise explanation of what improved and what still failed.
+        </li>
+      </ul>
+    </article>
+
+    <article className="paper-card">
+      <span className="paper-label">Metrics</span>
+      <h3>Useful summary values</h3>
+      <ul className="metric-strip">
+        <li>
+          <strong>Leakage</strong>
+          retained water ratio
+        </li>
+        <li>
+          <strong>Runtime</strong>
+          simulation or render time
+        </li>
+        <li>
+          <strong>Quality</strong>
+          visual plausibility and stability
+        </li>
+      </ul>
+    </article>
+  </section>
+
+  <section>
+    <div className="paper-card">
+      <div className="section-head">
+        <span className="paper-label">Demo block</span>
+        <h2>Playground stays here as the result placeholder</h2>
+        <div className="copy-block">
+          If you later want an interactive or client-only result note, keep it on
+          this page so the site navigation stays page-based rather than collapsing
+          back into one long landing page.
+        </div>
+      </div>
+      <PlaygroundShowcase />
+    </div>
+  </section>
+</div>
+

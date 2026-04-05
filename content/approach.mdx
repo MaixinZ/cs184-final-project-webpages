@@ -1,0 +1,100 @@
+---
+title: Approach
+description: Standalone approach page for capture, reconstruction, and simulation pipeline.
+---
+
+<div className="page-shell">
+  <section className="hero-note">
+    <p className="note-kicker">approach</p>
+    <h1>Capture, reconstruct, simulate, then validate.</h1>
+    <div className="hero-lead">
+      The approach page separates process from presentation. It focuses on what
+      data enters the system, how geometry is built, how water is simulated, and
+      where quantitative checks should happen.
+    </div>
+  </section>
+
+  <section className="paper-strip">
+    <div className="section-head">
+      <span className="paper-label">Pipeline</span>
+      <h2>Suggested technical sequence</h2>
+      <div className="copy-block">
+        The pipeline should move from scene capture to reconstruction quality
+        control before simulation-specific tuning starts.
+      </div>
+    </div>
+    <div className="paper-strip__stack">
+      <ol className="pipeline-list">
+        <li>
+          <span className="pipeline-step">01</span>
+          <div>
+            <strong>Scene capture</strong>
+            <p>Acquire a RealSense snapshot and clean the raw depth output.</p>
+          </div>
+        </li>
+        <li>
+          <span className="pipeline-step">02</span>
+          <div>
+            <strong>Point cloud preparation</strong>
+            <p>Filter noise, crop the region of interest, and normalize scale.</p>
+          </div>
+        </li>
+        <li>
+          <span className="pipeline-step">03</span>
+          <div>
+            <strong>Mesh reconstruction</strong>
+            <p>Evaluate interpolation, Ball Pivoting, Poisson, or another practical strategy.</p>
+          </div>
+        </li>
+        <li>
+          <span className="pipeline-step">04</span>
+          <div>
+            <strong>Water simulation</strong>
+            <p>Run collision tests, tune particle behavior, and record leakage cases.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section className="page-grid">
+    <article className="paper-card">
+      <span className="paper-label">Reconstruction</span>
+      <h2>Geometry checks before simulation</h2>
+      <ul className="stack-list">
+        <li>
+          <strong>Watertightness</strong>
+          Holes that look minor in the mesh viewer can completely invalidate a water test.
+        </li>
+        <li>
+          <strong>Surface continuity</strong>
+          Thin or broken surfaces create unstable contact behavior.
+        </li>
+        <li>
+          <strong>Scale consistency</strong>
+          Simulation parameters only make sense if scene units are coherent.
+        </li>
+      </ul>
+    </article>
+
+    <article className="paper-card">
+      <span className="paper-label">Simulation</span>
+      <h3>What should be measured</h3>
+      <ul className="stack-list">
+        <li>
+          <strong>Retention</strong>
+          How much water is retained versus lost through mesh failures.
+        </li>
+        <li>
+          <strong>Stability</strong>
+          Whether splashes, collisions, and settling look numerically stable.
+        </li>
+        <li>
+          <strong>Cost</strong>
+          Time per run and whether iteration speed is acceptable.
+        </li>
+      </ul>
+    </article>
+  </section>
+</div>
+

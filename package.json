@@ -1,0 +1,17 @@
+{
+  "name": "cs184-final-project-webpages",
+  "private": true,
+  "scripts": {
+    "dev": "next --turbopack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
+
