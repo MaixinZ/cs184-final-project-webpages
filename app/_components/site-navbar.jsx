@@ -4,7 +4,7 @@ export function SiteNavbar() {
   return (
     <header className="site-navbar">
       <div className="site-navbar__inner">
-        <Link className="site-navbar__brand" href="/overview">
+        <Link className="site-navbar__brand" href="/">
           <span className="site-navbar__eyebrow">CS184/284 Computer Graphics</span>
           <strong>Final Project</strong>
         </Link>

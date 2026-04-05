@@ -1,6 +1,6 @@
 export const navigationLinks = [
   {
-    href: '/overview',
+    href: '/',
     label: 'Overview'
   },
   {

@@ -10,7 +10,7 @@ const baseTheme = {
 }
 
 export default {
-  overview: {
+  index: {
     title: 'Overview',
     theme: baseTheme
   },
