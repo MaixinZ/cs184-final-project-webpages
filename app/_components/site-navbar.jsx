@@ -9,7 +9,7 @@ export function SiteNavbar() {
           <strong>Final Project</strong>
         </Link>
         <p className="site-navbar__summary">
-          Real-Time Multi-Style Rendering and Interactive Style Composition in a Shared 3D Scene
+          Neon Worlds, New Styles
         </p>
       </div>
     </header>
