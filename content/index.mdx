@@ -68,18 +68,12 @@ description: Project overview page for the CS184 final project site.
       </div>
       <ul className="stack-list">
         <li>
-          <strong>Research question 1</strong>
-          Can region-aware stylization control improve coherence over naive
-          uniform post-processing?
+          Can region-aware stylization improve coherence over naive uniform
+          post-processing in Cyberpunk 2077 scenes?
         </li>
         <li>
-          <strong>Research question 2</strong>
-          Which urban scene regions fail most visibly under naive stylization?
-        </li>
-        <li>
-          <strong>Research question 3</strong>
-          Can style transitions remain visually stable during motion and
-          split-world composition?
+          Can split-world composition make style differences more legible and
+          artistically compelling within the same frame?
         </li>
       </ul>
     </article>
@@ -118,8 +112,9 @@ description: Project overview page for the CS184 final project site.
         </li>
         <li>
           <strong>Temporal transitions</strong>
-          Support at least one smooth transition between styles over time, with
-          attention to visual stability during motion.
+          Implement at least one smooth style-to-style transition over time,
+          such as moving split masks, and evaluate whether the result stays
+          visually stable during camera motion.
         </li>
         <li>
           <strong>Matched-scene evaluation</strong>
@@ -133,13 +128,12 @@ description: Project overview page for the CS184 final project site.
       <span className="paper-label">Optional Extensions</span>
       <h3>What we hope to deliver</h3>
       <div className="copy-block">
-        The split-world idea is part of the main Cyberpunk project, not a
-        separate Godot-first branch. Optional work only begins after the
-        Cyberpunk stylization pipeline is stable. Our first optional extension
-        is a 3D Gaussian Splatting proof of concept for Night City. A second
-        portability extension would port the shader logic and split-world
-        control mode to a Godot scene so users could import their own geometry,
-        but only if the Cyberpunk implementation is already working reliably.
+        Optional work only begins after the Cyberpunk stylization pipeline is
+        stable. Our first optional extension is a 3D Gaussian Splatting proof
+        of concept for Night City. A second portability extension would port
+        the shader logic and split-world control mode to a Godot scene so users
+        could import their own geometry, but only if the Cyberpunk
+        implementation is already working reliably.
       </div>
       <ul className="stack-list">
         <li>
@@ -213,12 +207,6 @@ description: Project overview page for the CS184 final project site.
           Inspect emissive blowout, skyline flattening, detail washout in dense
           foreground, silhouette degradation, HUD contamination, and temporal
           flicker during movement or transition.
-        </li>
-        <li>
-          <strong>Why this checklist is appropriate</strong>
-          These are not universal benchmark metrics, but they are suitable
-          project-specific criteria for judging coherence and failure modes in a
-          real-time stylization pipeline.
         </li>
         <li>
           <strong>Optional extra evaluation</strong>
@@ -374,49 +362,6 @@ description: Project overview page for the CS184 final project site.
   </section>
 
   <section className="page-grid">
-    <article className="paper-card">
-      <span className="paper-label">Contingency Plan</span>
-      <h2>How we reduce scope if implementation slips</h2>
-      <div className="copy-block">
-        If implementation takes longer than expected, we will reduce scope in a
-        fixed order so the final output stays coherent and demoable.
-      </div>
-      <ol className="pipeline-list">
-        <li>
-          <span className="pipeline-step">01</span>
-          <div>
-            <strong>Keep the strongest two or three styles</strong>
-            Preserve the most convincing styles rather than forcing all four to
-            reach the same polish level.
-          </div>
-        </li>
-        <li>
-          <span className="pipeline-step">02</span>
-          <div>
-            <strong>Protect the core demo features</strong>
-            Keep split-world mode, region-aware control, and temporal
-            transition as the mainline demo even if style breadth is reduced.
-          </div>
-        </li>
-        <li>
-          <span className="pipeline-step">03</span>
-          <div>
-            <strong>Drop Godot portability first</strong>
-            Remove the secondary portability extension before cutting anything
-            from the main Cyberpunk pipeline.
-          </div>
-        </li>
-        <li>
-          <span className="pipeline-step">04</span>
-          <div>
-            <strong>Drop 3DGS next if needed</strong>
-            Treat the 3DGS branch as optional research follow-up and remove it
-            entirely if the main stylization system still needs stabilization.
-          </div>
-        </li>
-      </ol>
-    </article>
-
     <article className="paper-card paper-card--accent">
       <span className="paper-label">Technical Risks</span>
       <h3>Main limitations and mitigation</h3>
