@@ -12,39 +12,70 @@ description: Project overview page for the CS184 final project site.
     </div>
     <br />
     <div className="hero-lead">
-      We propose a real-time graphics project that applies custom scene-level
-      stylization to <em>Cyberpunk 2077</em> using a ReShade-based shader
-      pipeline. Our main goal is to design several coherent full-scene visual
-      styles, study how to transition between them over time, and improve
-      global consistency through coarse scene-aware control rather than naive
-      uniform post-processing. <em>Cyberpunk 2077</em> provides official mod
-      support through REDmod, making this a realistic platform for a
-      rendering-focused project. As an optional extension, we will explore
-      whether stylized observations of the game can be used to fit a 3D
-      Gaussian Splatting representation for novel-view rendering.
+      We propose a real-time graphics project in <em>Cyberpunk 2077</em> built
+      around a ReShade-based stylization pipeline. Beyond authoring several
+      coherent full-scene styles, we want to compose and juxtapose multiple
+      styles inside the same Night City frame through a split-world mode that
+      uses line-based or shape-based screen-space masks. We also study temporal
+      transitions between styles and region-aware stylization control so the
+      result is more deliberate than naive uniform post-processing. As an
+      optional extension, we will test a 3D Gaussian Splatting proof of concept
+      for stylized novel-view rendering of Night City.
     </div>
     <div className="hero-meta">
-      <span>real-time rendering</span>
-      <span>scene-level stylization</span>
-      <span>ReShade pipeline</span>
-      <span>3DGS extension</span>
+      <span>ReShade in Cyberpunk 2077</span>
+      <span>split-world composition</span>
+      <span>region-aware stylization</span>
+      <span>optional 3DGS</span>
     </div>
   </section>
 
   <section>
     <article className="paper-card">
       <span className="paper-label">Problem Description</span>
-      <h2>What this project is trying to conquer</h2>
+      <h2>What technical problem we want to solve</h2>
       <div className="copy-block">
-        Modern commercial games already contain rich geometry, lighting, and
-        materials, but most stylization work in practice is either limited to
-        simple full-screen filters or requires deep access to an engine&apos;s
-        internal rendering pipeline. Our project focuses on an intermediate but
-        meaningful setting: scene-level stylization of an existing game in real
-        time, where we do not rebuild the renderer from scratch, but instead
-        design custom shader-based effects that are expressive enough to create
-        distinct visual languages while still preserving scene coherence.
+        Naive full-screen stylization is easy to apply, but it often fails
+        unevenly on dense urban scenes. In <em>Cyberpunk 2077</em>, emissive
+        signage, distant skyline structure, reflective surfaces, HUD or UI
+        overlays, and dense foreground geometry all respond differently to the
+        same post-process effect. A single global filter can therefore blow out
+        neon highlights, flatten background structure, wash out local detail, or
+        contaminate overlays that should remain legible.
       </div>
+      <div className="copy-block">
+        Our project studies whether a post-process pipeline can produce more
+        coherent real-time stylization without assuming deep access to the game
+        engine. The main technical challenge is to build several usable
+        full-scene styles, then control them in a region-aware way so different
+        parts of the same frame can be modulated differently and even
+        juxtaposed through split-world composition. This is not full semantic
+        segmentation and it is not a deep-learning-based scene parser. Instead,
+        we will rely on region-aware stylization control driven by screen-space
+        cues and shader heuristics.
+      </div>
+      <div className="copy-block">
+        The control signals we expect to use include depth when available and
+        stable, luminance or emissive intensity, edges and structure,
+        foreground-versus-background separation, derived normals or edge proxies
+        where feasible, hue or saturation or color-cluster masks, and local
+        variance or texture-complexity masks. These heuristics should help us
+        differentiate bright neon-heavy areas, skyline or background regions,
+        dense detailed foreground regions, flatter low-detail surfaces, and
+        highly emissive or high-contrast areas. The goal is not exact
+        object-level understanding, but more coherent region-aware masking and
+        modulation than a uniform full-screen pass.
+      </div>
+      <ul className="stack-list">
+        <li>
+          Can region-aware stylization improve coherence over naive uniform
+          post-processing in Cyberpunk 2077 scenes?
+        </li>
+        <li>
+          Can split-world composition make style differences more legible and
+          artistically compelling within the same frame?
+        </li>
+      </ul>
     </article>
   </section>
 
@@ -53,58 +84,135 @@ description: Project overview page for the CS184 final project site.
       <span className="paper-label">Goals And Deliverables</span>
       <h2>What we plan to deliver</h2>
       <div className="copy-block">
-        Our baseline deliverable is a working real-time stylization system in
-        <em> Cyberpunk 2077 </em> using ReShade, with at least four complete
-        scene-level styles. Each style should change the visual language of the
-        scene in a meaningful way rather than acting like a minor color preset.
-        Candidate styles include a cinematic or fantasy grading style, a
-        stylized toon-like style, and a painterly or oil-paint style. We want
-        to show that the same world can move across different visual states
-        while remaining recognizable and coherent. We also plan to support
-        scene-wide style switching and at least one form of smooth temporal
-        transition.
+        Our baseline target by the final project is four usable scene-level
+        styles inside <em>Cyberpunk 2077</em>. The required polished demo is
+        narrower: we want at least two of the strongest styles shown on the
+        same matched scene, including a split-world comparison and a temporal
+        transition. All four styles will still be documented somewhere in the
+        final website or video, even if final polish is concentrated on the
+        strongest two.
       </div>
       <ul className="stack-list">
         <li>
-          <strong>Baseline demo</strong>
-          A short video or live demonstration in <em>Cyberpunk 2077</em>.
+          <strong>Multiple scene-level styles</strong>
+          Build four usable full-scene styles in the Cyberpunk ReShade pipeline,
+          with distinct visual behavior rather than minor preset changes.
         </li>
         <li>
-          <strong>Style coverage</strong>
-          At least two distinct styles applied to the same scene, with a target of four full styles in total.
+          <strong>Split-world composition</strong>
+          Implement a same-frame composition mode that uses line-based or
+          shape-based masks so one side or region of the screen can use one
+          style while another region uses a different style. This is a single
+          composed frame, not multiple windows or multiple game instances.
         </li>
         <li>
-          <strong>Temporal behavior</strong>
-          Style switching and one smooth transition over time.
+          <strong>Region-aware stylization heuristics</strong>
+          Modulate style strength with screen-space cues and heuristics instead
+          of applying every effect uniformly across the full frame.
         </li>
         <li>
-          <strong>Evaluation material</strong>
-          Matched before and after comparisons on the same scene.
+          <strong>Temporal transitions</strong>
+          Implement at least one smooth style-to-style transition over time,
+          such as moving split masks, and evaluate whether the result stays
+          visually stable during camera motion.
+        </li>
+        <li>
+          <strong>Matched-scene evaluation</strong>
+          Record fixed-scene comparisons so we can compare vanilla rendering,
+          naive stylization, region-aware stylization, and split-world output.
         </li>
       </ul>
     </article>
 
     <article className="paper-card paper-card--accent">
-      <span className="paper-label">Aspirational Extension</span>
+      <span className="paper-label">Optional Extensions</span>
       <h3>What we hope to deliver</h3>
       <div className="copy-block">
-        Our main aspirational extension is a 3DGS branch. We would capture a
-        sequence of stylized observations, estimate or extract camera
-        information, and fit a 3D Gaussian Splatting model using Nerfstudio&apos;s
-        Splatfacto. Then we would test whether stylized observations can
-        support plausible novel-view rendering. This would let us explore a
-        more research-oriented question: whether a learned scene representation
-        can preserve a stylized visual language rather than only a photorealistic
-        one.
+        Optional work only begins after the Cyberpunk stylization pipeline is
+        stable. Our first optional extension is a 3D Gaussian Splatting proof
+        of concept for Night City. A second portability extension would port
+        the shader logic and split-world control mode to a Godot scene so users
+        could import their own geometry, but only if the Cyberpunk
+        implementation is already working reliably.
       </div>
       <ul className="stack-list">
         <li>
-          <strong>3DGS branch</strong>
-          Use Nerfstudio and Splatfacto to test stylized novel-view rendering from captured observations.
+          <strong>Primary optional extension: 3DGS proof of concept</strong>
+          Capture stylized observations of Night City, fit a small Nerfstudio or
+          Splatfacto model, and test whether nearby unseen viewpoints remain
+          plausible while preserving the stylized identity of the scene.
         </li>
         <li>
-          <strong>Split-world scene idea</strong>
-          Build our own scene in Godot and reproduce a split-scene lighting or shading effect similar to <em>Split Fiction</em>.
+          <strong>Optional 3DGS evaluation</strong>
+          Judge qualitative novel-view plausibility, consistency across nearby
+          unseen viewpoints, preservation of scene style, and whether training
+          and rendering are feasible on our captured observations.
+        </li>
+        <li>
+          <strong>Secondary portability extension: Godot</strong>
+          If time permits after the Cyberpunk pipeline is stable, port the
+          shader logic and split-world control mode to a Godot scene so users
+          can experiment with imported geometry in a simpler environment.
+        </li>
+      </ul>
+    </article>
+  </section>
+
+  <section className="page-grid">
+    <article className="paper-card">
+      <span className="paper-label">Evaluation</span>
+      <h2>Performance and matched-scene comparison</h2>
+      <div className="copy-block">
+        We will evaluate the system on fixed camera, weather, and time-of-day
+        conditions where possible so the comparisons stay as controlled as the
+        game setting allows.
+      </div>
+      <ul className="stack-list">
+        <li>
+          <strong>Runtime and performance</strong>
+          Record average FPS, average frame time in milliseconds, overhead
+          relative to the vanilla game, and overhead relative to a naive
+          full-screen style baseline.
+        </li>
+        <li>
+          <strong>Comparison cases</strong>
+          Compare the vanilla game, a naive uniform style, a region-aware style,
+          split-world mode, and transition mode.
+        </li>
+        <li>
+          <strong>Representative scenes</strong>
+          Use three matched scene categories: a neon-heavy street scene, a
+          reflective or mixed-material scene, and a skyline or distant dense
+          urban scene.
+        </li>
+        <li>
+          <strong>Matched-scene outputs</strong>
+          For each scene, compare vanilla rendering, naive stylization,
+          region-aware stylization, and split-world output when applicable.
+        </li>
+      </ul>
+    </article>
+
+    <article className="paper-card paper-card--accent">
+      <span className="paper-label">Evaluation</span>
+      <h3>Artifact checklist and optional extras</h3>
+      <div className="copy-block">
+        Because this project does not target a standard benchmark, we will also
+        use rubric-style graphics criteria that reflect the actual failure modes
+        of post-process stylization in Cyberpunk scenes.
+      </div>
+      <ul className="stack-list">
+        <li>
+          <strong>Artifact and coherence checklist</strong>
+          Inspect emissive blowout, skyline flattening, detail washout in dense
+          foreground, silhouette degradation, HUD contamination, and temporal
+          flicker during movement or transition.
+        </li>
+        <li>
+          <strong>Optional extra evaluation</strong>
+          If time permits, we may run a small human preference poll with roughly
+          8 to 15 viewers to compare which outputs feel more coherent or more
+          intentional.
         </li>
       </ul>
     </article>
@@ -115,12 +223,10 @@ description: Project overview page for the CS184 final project site.
       <span className="paper-label">Schedule</span>
       <h2>Four-week execution plan</h2>
       <div className="copy-block">
-        Our schedule is organized around the baseline goal of building a
-        working real-time stylization system in <em>Cyberpunk 2077</em> using
-        ReShade, with multiple full-scene styles, scene-wide switching, and
-        smooth temporal transitions. The optional 3DGS extension is reserved
-        for the final stage and will only be pursued if the main rendering
-        pipeline is already stable.
+        Our schedule prioritizes the main Cyberpunk pipeline first: multiple
+        styles, split-world composition, temporal transitions, and region-aware
+        heuristics. Optional branches only begin after this core pipeline is
+        stable.
       </div>
     </div>
 
@@ -128,18 +234,32 @@ description: Project overview page for the CS184 final project site.
       <li className="paper-timeline__item">
         <span className="paper-timeline__week">Week 1</span>
         <div className="paper-timeline__body">
-          <h3>Setup, references, and first style prototype</h3>
+          <h3>Pipeline validation and first prototype</h3>
           <p>
-            Finalize the technical pipeline, validate ReShade in
-            <em> Cyberpunk 2077 </em>, select representative scenes for testing,
-            review references, and define what counts as a complete scene-level
-            style.
+            Validate the ReShade setup inside <em>Cyberpunk 2077</em>, confirm
+            depth access when possible, choose representative scenes, and decide
+            the first styles we want to prototype.
           </p>
           <ul className="stack-list">
-            <li><strong>Stable setup</strong> A working ReShade configuration inside the game.</li>
-            <li><strong>Test scenes</strong> A fixed set of scenes and camera views for comparison.</li>
-            <li><strong>Prototype</strong> The first usable style prototype.</li>
-            <li><strong>Team split</strong> A clearer division of labor across the team.</li>
+            <li>
+              <strong>Stable setup</strong>
+              Validate ReShade in the game and test depth access when possible.
+            </li>
+            <li>
+              <strong>Scene selection</strong>
+              Choose representative scenes, matched camera views, and candidate
+              style directions.
+            </li>
+            <li>
+              <strong>Prototype</strong>
+              Implement the first style prototype and test the feasibility of
+              split-world compositing.
+            </li>
+            <li>
+              <strong>Team roles</strong>
+              Assign ownership across style design, heuristics, capture, and
+              evaluation.
+            </li>
           </ul>
         </div>
       </li>
@@ -147,17 +267,30 @@ description: Project overview page for the CS184 final project site.
       <li className="paper-timeline__item">
         <span className="paper-timeline__week">Week 2</span>
         <div className="paper-timeline__body">
-          <h3>Build the core style library</h3>
+          <h3>Core style library and first region-aware controls</h3>
           <p>
-            Focus on implementing the main style set. The priority is breadth
-            plus clarity: each style should produce a distinct overall
-            appearance rather than a minor parameter variation.
+            Build the main style library, continue toward four usable styles,
+            and begin replacing naive global effects with region-aware control
+            heuristics.
           </p>
           <ul className="stack-list">
-            <li><strong>Four styles</strong> At least four styles implemented in usable form.</li>
-            <li><strong>Comparisons</strong> Initial before and after comparisons on the same scene.</li>
-            <li><strong>Coverage</strong> A preliminary fourth style started or partially working.</li>
-            <li><strong>Recognition</strong> A first comparison showing that the same world remains recognizable across styles.</li>
+            <li>
+              <strong>Style library</strong>
+              Build out the core style set and continue toward four usable
+              scene-level styles.
+            </li>
+            <li>
+              <strong>Region-aware heuristics</strong>
+              Implement the first screen-space control logic and masking rules.
+            </li>
+            <li>
+              <strong>Comparisons</strong>
+              Start naive-versus-region-aware comparisons on matched scenes.
+            </li>
+            <li>
+              <strong>Split-world prototype</strong>
+              Implement the first working split-world composition mode.
+            </li>
           </ul>
         </div>
       </li>
@@ -165,17 +298,30 @@ description: Project overview page for the CS184 final project site.
       <li className="paper-timeline__item">
         <span className="paper-timeline__week">Week 3</span>
         <div className="paper-timeline__body">
-          <h3>Style switching, temporal transitions, and polish</h3>
+          <h3>Split-world polish, transitions, and profiling</h3>
           <p>
-            Make the system feel like one coherent graphics project rather than
-            a collection of isolated effects. This week emphasizes scene-wide
-            style switching, smooth temporal transitions, and visual cleanup.
+            Improve the presentation of the mixed-style world, add temporal
+            transitions, stabilize the heuristics, and profile the cost of each
+            mode.
           </p>
           <ul className="stack-list">
-            <li><strong>Complete styles</strong> At least four complete styles working together.</li>
-            <li><strong>Switching system</strong> A functioning scene-wide switching pipeline.</li>
-            <li><strong>Transition effect</strong> At least one smooth temporal transition.</li>
-            <li><strong>Demo polish</strong> A polished sequence showing the same scene under multiple visual states.</li>
+            <li>
+              <strong>Split-world polish</strong>
+              Refine line-based or shape-based masks and presentation choices.
+            </li>
+            <li>
+              <strong>Temporal transitions</strong>
+              Add and stabilize at least one smooth transition between styles.
+            </li>
+            <li>
+              <strong>Performance work</strong>
+              Profile runtime cost and refine matched-scene comparisons.
+            </li>
+            <li>
+              <strong>Deep polish</strong>
+              Focus detailed polish on the two strongest styles for the final
+              demo.
+            </li>
           </ul>
         </div>
       </li>
@@ -183,17 +329,32 @@ description: Project overview page for the CS184 final project site.
       <li className="paper-timeline__item">
         <span className="paper-timeline__week">Week 4</span>
         <div className="paper-timeline__body">
-          <h3>Final demo, evaluation, and optional 3DGS extension</h3>
+          <h3>Final evaluation, documentation, and optional branch work</h3>
           <p>
-            Finalize the rendering system, record the demo, prepare evaluation
-            material, and only then explore the optional 3DGS branch if time
-            remains.
+            Finalize the main demo and evaluation materials first. Only after
+            that will we begin any optional extension work.
           </p>
           <ul className="stack-list">
-            <li><strong>Final demo</strong> A final demo video or live demo.</li>
-            <li><strong>Matched shots</strong> Before and after comparison images.</li>
-            <li><strong>Transitions</strong> Examples of style switching and temporal transition.</li>
-            <li><strong>Write-up</strong> A complete write-up of results and, if time allows, an initial 3DGS proof of concept.</li>
+            <li>
+              <strong>Final demo and evaluation</strong>
+              Record polished comparisons, collect runtime measurements, and
+              finalize matched-scene outputs.
+            </li>
+            <li>
+              <strong>Style documentation</strong>
+              Document all four usable styles somewhere in the final website or
+              video.
+            </li>
+            <li>
+              <strong>Presentation material</strong>
+              Produce polished comparison videos and images for the report and
+              demo.
+            </li>
+            <li>
+              <strong>Optional follow-up</strong>
+              If the pipeline is stable, begin the 3DGS proof of concept and
+              only after that consider the Godot portability extension.
+            </li>
           </ul>
         </div>
       </li>
@@ -201,65 +362,43 @@ description: Project overview page for the CS184 final project site.
   </section>
 
   <section className="page-grid">
-    <article className="paper-card">
-      <span className="paper-label">Contingency Plan</span>
-      <h2>How we reduce scope if implementation slips</h2>
-      <div className="copy-block">
-        If implementation takes longer than expected, we will reduce scope in a
-        fixed order so the final output remains complete rather than scattered.
-      </div>
-      <ol className="pipeline-list">
+    <article className="paper-card paper-card--accent">
+      <span className="paper-label">Technical Risks</span>
+      <h3>Main limitations and mitigation</h3>
+      <ul className="stack-list">
         <li>
-          <span className="pipeline-step">01</span>
-          <div>
-            <strong>Keep fewer styles</strong>
-            Keep only the strongest two or three styles rather than forcing four weak ones.
-          </div>
+          <strong>Post-process and depth-buffer limitations</strong>
+          We operate in a post-process regime rather than inside the game
+          renderer. Depth access may be available but unstable or
+          setting-dependent, and multiple depth buffers or clear operations may
+          complicate depth-based effects. Mitigation: validate depth feasibility
+          early, use ReShade depth debugging tools where appropriate, scope
+          effects to scenes where depth is reliable, and keep fallback heuristics
+          that depend less on fragile signals.
         </li>
         <li>
-          <span className="pipeline-step">02</span>
-          <div>
-            <strong>Protect transitions</strong>
-            Prioritize style switching and temporal transition over extra style count.
-          </div>
+          <strong>Lack of exact object or material IDs</strong>
+          Region-aware control will rely on screen-space signals and heuristics
+          rather than exact semantic segmentation or full material-aware access.
+          This limits fine-grained per-object control. Mitigation: focus on
+          robust region-level effects, use artistic masks and split-world
+          controls, and prioritize coherence over exact semantic correctness.
         </li>
         <li>
-          <span className="pipeline-step">03</span>
-          <div>
-            <strong>Drop 3DGS if needed</strong>
-            Remove the optional 3DGS extension entirely if the main rendering system is not fully stable.
-          </div>
-        </li>
-      </ol>
-    </article>
-
-    <article className="paper-card">
-      <span className="paper-label">Resources</span>
-      <h3>References and prior systems</h3>
-      <ul className="reference-list">
-        <li>
-          <strong>ReShade official website and documentation</strong>
-          Main programmable post-processing framework for the project.
+          <strong>Temporal instability and flicker</strong>
+          Cyberpunk scenes contain dense geometry, strong emissives,
+          reflections, moving objects, and complex lighting, so threshold-based
+          logic may flicker during camera movement or style transitions.
+          Mitigation: prefer soft transitions over hard thresholds, use
+          temporally smoother masks where possible, benchmark on controlled
+          camera paths, and focus first on stable low-frequency region logic.
         </li>
         <li>
-          <strong>Cyberpunk 2077 REDmod support page</strong>
-          Official mod-loading toolchain for the game.
-        </li>
-        <li>
-          <strong>Cyberpunk 2077 modding documentation</strong>
-          Material and shader pages for how the game organizes visual assets.
-        </li>
-        <li>
-          <strong>ShaderToy</strong>
-          <a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a>
-        </li>
-        <li>
-          <strong>Nerfstudio documentation and Splatfacto</strong>
-          Basis for the optional 3DGS extension.
-        </li>
-        <li>
-          <strong>Stylized rendering references</strong>
-          Papers and tutorials on painterly rendering, toon shading, and Gaussian Splatting.
+          <strong>Scope risk from optional branches</strong>
+          The 3DGS and Godot branches are meaningful but non-essential
+          extensions. The main deliverable is the Cyberpunk stylization system
+          itself. Mitigation: keep a strict mainline-first schedule and only
+          pursue optional branches after the Cyberpunk pipeline is stable.
         </li>
       </ul>
     </article>
@@ -267,46 +406,73 @@ description: Project overview page for the CS184 final project site.
 
   <section className="page-grid">
     <article className="paper-card">
-      <span className="paper-label">Computing Platform</span>
-      <h2>Main rendering and training setup</h2>
-      <ul className="stack-list">
+      <span className="paper-label">Resources</span>
+      <h3>References and prior systems</h3>
+      <ul className="reference-list">
         <li>
-          <strong>Main rendering platform</strong>
-          <em>Cyberpunk 2077</em> on PC with ReShade for programmable scene-level stylization.
+          <strong>ReShade official documentation</strong>
+          Primary reference for the programmable post-process pipeline and shader
+          integration details.
         </li>
         <li>
-          <strong>Mod support tools</strong>
-          REDmod and WolvenKit where relevant for inspection and integration.
+          <strong>Cyberpunk 2077 REDmod support page</strong>
+          Official reference for the game&apos;s supported mod workflow and
+          practical integration constraints.
         </li>
         <li>
-          <strong>Hardware</strong>
-          Windows desktop hardware with a modern NVIDIA GPU.
+          <strong>Cyberpunk 2077 modding documentation</strong>
+          Background material on the game&apos;s asset organization, shader
+          context, and toolchain constraints.
         </li>
         <li>
-          <strong>Optional learned-scene branch</strong>
-          Nerfstudio, a Python environment for Splatfacto training, and local or lab GPU resources depending on availability.
+          <strong>ShaderToy</strong>
+          <a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a>
+        </li>
+        <li>
+          <strong>Nerfstudio documentation and Splatfacto</strong>
+          Main reference for the optional 3DGS proof of concept.
+        </li>
+        <li>
+          <strong>Stylized rendering references</strong>
+          Painterly, toon, and other stylized rendering references that help us
+          define plausible style directions and evaluation language.
+        </li>
+        <li>
+          <strong>Screen-space stylization references and shader examples</strong>
+          Existing ReShade and Cyberpunk-related shader projects that can inform
+          practical heuristics, mask construction, and composition ideas.
         </li>
       </ul>
     </article>
 
-    <article className="paper-card paper-card--accent">
-      <span className="paper-label">Starting Point</span>
-      <h3>What we are building from</h3>
-      <div className="copy-block">
-        We are not starting from an existing full project implementation.
-        Instead, we are starting from the existing <em>Cyberpunk 2077</em>
-        runtime as the rendered scene, ReShade as the programmable
-        post-processing layer, official modding support tools, and Nerfstudio
-        as an optional extension framework for learned scene representation.
-      </div>
+    <article className="paper-card">
+      <span className="paper-label">Computing Platform</span>
+      <h2>Main rendering and extension setup</h2>
       <ul className="stack-list">
         <li>
-          <strong>Main contribution</strong>
-          The design, implementation, and evaluation of a scene-aware real-time stylization system for <em>Cyberpunk 2077</em>.
+          <strong>Main rendering platform</strong>
+          <em>Cyberpunk 2077</em> on PC with ReShade for programmable
+          scene-level stylization and split-world composition.
         </li>
         <li>
-          <strong>Optional research branch</strong>
-          A first exploration of learned stylized novel-view rendering through 3D Gaussian Splatting.
+          <strong>Mod support tools</strong>
+          REDmod and WolvenKit where relevant for inspection, setup, and
+          debugging.
+        </li>
+        <li>
+          <strong>Hardware</strong>
+          Windows desktop hardware with a modern NVIDIA GPU for real-time
+          testing and capture.
+        </li>
+        <li>
+          <strong>Optional learned-scene branch</strong>
+          Nerfstudio, a Python environment for Splatfacto training, and local or
+          lab GPU resources depending on availability.
+        </li>
+        <li>
+          <strong>Optional portability branch</strong>
+          Godot only if the Cyberpunk pipeline is already stable and there is
+          time left for a follow-up portability experiment.
         </li>
       </ul>
     </article>
